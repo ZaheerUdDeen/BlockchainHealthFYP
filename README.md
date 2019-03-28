@@ -65,6 +65,12 @@ Follow these steps to setup and run this code pattern.
 ### 1. Setup the Blockchain Network
 
 
+[Clone this repo](https://github.com/ZaheerUdDeen/BlockchainHealthFYP.git) using the following command.
+
+```
+$ git clone https://github.com/ZaheerUdDeen/BlockchainHealthFYP.git
+```
+
 To build the blockchain network, the first step is to generate artifacts for peers and channels using cryptogen and configtx. The utilities used and steps to generate artifacts are explained [here](https://hyperledger-fabric.readthedocs.io/en/release-1.1/build_network.html). In this pattern all required artifacts for the peers and channel of the network are already generated and provided to use as-is. Artifacts can be located at:
 
    ```
@@ -97,6 +103,9 @@ To delete the network completely, following script need to execute.
    chmod +x teardown.sh
    ./teardown.sh
    ```
+> **Note:** after ./build.start when your network is up and runing follow step 2,3,4,5 consecutively. might you will face multiple try out of stop and build again. after each build.sh follow step 2 and onward.
+
+
 
 ### 2. Build the client based on Fabric Java SDK
 
@@ -170,7 +179,7 @@ Mar 29, 2019 1:38:11 AM main.java.org.app.network.DeployInstantiateChaincode mai
 INFO: emergencyHealthCare- Chain code instantiation SUCCESS
   ```
 
-   > **Note:** The chaincode emergencyHealthCare.go was taken from /home/zephyr/BlockchainHealthcare/network_resources/chaincode/src/github.com/emergencyHealthcare/emergencyHealthCare.go
+   > **Note:** The chaincode emergencyHealthCare.go was taken from BlockchainHealthcare/network_resources/chaincode/src/github.com/emergencyHealthcare/emergencyHealthCare.go
 
 ### 5. Register and enroll users
 
