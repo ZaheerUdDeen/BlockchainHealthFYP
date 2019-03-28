@@ -140,41 +140,35 @@ Output:
 
 ### 4. Deploy and Instantiate the chaincode
 
-This code pattern uses a sample chaincode `fabcar` to demo the usage of Hyperledger Fabric SDK Java APIs. To deploy and instantiate the chaincode, execute the following command.
+This code pattern uses a  chaincode `emergencyHealthCare` to demo the usage of Hyperledger Fabric SDK Java APIs. To deploy and instantiate the chaincode, execute the following command.
 
    ```
-   java -cp blockchain-client.jar org.app.network.DeployInstantiateChaincode
+  java -cp emergency-healthcare.jar main.java.org.app.network.DeployInstantiateChaincode
    ```
 
    Output:
 
-   ```Apr 23, 2018 10:25:22 AM org.app.client.FabricClient deployChainCode
-      INFO: Deploying chaincode fabcar using Fabric client Org1MSP admin
-      Apr 23, 2018 10:25:22 AM org.app.network.DeployInstantiateChaincode main
-      INFO: fabcar- Chain code deployment SUCCESS
-      Apr 23, 2018 10:25:22 AM org.app.network.DeployInstantiateChaincode main
-      INFO: fabcar- Chain code deployment SUCCESS
-      Apr 23, 2018 10:25:22 AM org.app.client.FabricClient deployChainCode
-      INFO: Deploying chaincode fabcar using Fabric client Org2MSP admin
-      Apr 23, 2018 10:25:22 AM org.app.network.DeployInstantiateChaincode main
-      INFO: fabcar- Chain code deployment SUCCESS
-      Apr 23, 2018 10:25:22 AM org.app.network.DeployInstantiateChaincode main
-      INFO: fabcar- Chain code deployment SUCCESS
-      Apr 23, 2018 10:25:22 AM org.app.client.ChannelClient instantiateChainCode
-      INFO: Instantiate proposal request fabcar on channel mychannel with Fabric client Org2MSP admin
-      Apr 23, 2018 10:25:22 AM org.app.client.ChannelClient instantiateChainCode
-      INFO: Instantiating Chaincode ID fabcar on channel mychannel
-      Apr 23, 2018 10:25:25 AM org.app.client.ChannelClient instantiateChainCode
-      INFO: Chaincode fabcar on channel mychannel instantiation java.util.concurrent.CompletableFuture@723ca036[Not completed]
-      Apr 23, 2018 10:25:25 AM org.app.network.DeployInstantiateChaincode main
-      INFO: fabcar- Chain code instantiation SUCCESS
-      Apr 23, 2018 10:25:25 AM org.app.network.DeployInstantiateChaincode main
-      INFO: fabcar- Chain code instantiation SUCCESS
-      Apr 23, 2018 10:25:25 AM org.app.network.DeployInstantiateChaincode main
-      INFO: fabcar- Chain code instantiation SUCCESS
-      Apr 23, 2018 10:25:25 AM org.app.network.DeployInstantiateChaincode main
-      INFO: fabcar- Chain code instantiation SUCCESS
-   ```
+   ``` 
+log4j:WARN No appenders could be found for logger (org.hyperledger.fabric.sdk.helper.Config).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+Mar 29, 2019 1:38:07 AM main.java.org.app.client.FabricClient deployChainCode
+INFO: Deploying chaincode emergencyHealthCare using Fabric client Org1MSP admin
+Mar 29, 2019 1:38:08 AM main.java.org.app.network.DeployInstantiateChaincode main
+INFO: emergencyHealthCare- Chain code deployment SUCCESS
+Mar 29, 2019 1:38:08 AM main.java.org.app.network.DeployInstantiateChaincode main
+INFO: emergencyHealthCare- Chain code deployment SUCCESS
+Mar 29, 2019 1:38:08 AM main.java.org.app.client.ChannelClient instantiateChainCode
+INFO: Instantiate proposal request emergencyHealthCare on channel mychannel with Fabric client Org1MSP admin
+Mar 29, 2019 1:38:08 AM main.java.org.app.client.ChannelClient instantiateChainCode
+INFO: Instantiating Chaincode ID emergencyHealthCare on channel mychannel
+Mar 29, 2019 1:38:11 AM main.java.org.app.client.ChannelClient instantiateChainCode
+INFO: Chaincode emergencyHealthCare on channel mychannel instantiation java.util.concurrent.CompletableFuture@5b218417[Not completed]
+Mar 29, 2019 1:38:11 AM main.java.org.app.network.DeployInstantiateChaincode main
+INFO: emergencyHealthCare- Chain code instantiation SUCCESS
+Mar 29, 2019 1:38:11 AM main.java.org.app.network.DeployInstantiateChaincode main
+INFO: emergencyHealthCare- Chain code instantiation SUCCESS
+  ```
 
    > **Note:** The chaincode emergencyHealthCare.go was taken from /home/zephyr/BlockchainHealthcare/network_resources/chaincode/src/github.com/emergencyHealthcare/emergencyHealthCare.go
 
