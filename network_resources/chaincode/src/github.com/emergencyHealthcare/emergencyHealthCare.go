@@ -52,29 +52,6 @@ type Patient struct {
 	
 }
 
-type Doctor struct {
-	FirstName   string `json:"firstName"`
-	SecondName  string `json:"secondName"`
-	Age 	    string `json:"age"`
-	Address     string `json:"address"`
-	
-}
-
-/*type Treatment struct {
-	treatment   string `json:"treatment"`
-	diagnose  string `json:"diagnose"`
-	doctor 	    Doctor `json:"doctor"`
-	patient     Patient `json:"patient"`
-	
-}
-
-type TreatmentDrugs struct {
-	treatment   Treatment `json:"treatment"`
-	drugName    string `json:"drugName"`
-	quanity	    int `json:"quanity"`
-	drugType     String `json:"drugType"`
-	
-}*/
 /*
  * The Init method is called when the Smart Contract "fabcar" is instantiated by the blockchain network
  * Best practice is to have any Ledger initialization in separate function -- see initLedger()
@@ -84,7 +61,7 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 }
 
 /*
- * The Invoke method is called as a result of an application request to run the Smart Contract "fabcar"
+ * The Invoke method is called as a result of an application request to run this Smart Contract"
  * The calling application program has also specified the particular smart contract function to be called, with arguments
  */
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -94,12 +71,10 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	// Route to the appropriate handler function to interact with the ledger appropriately
 	if function == "registerPatient" {
 		return s.registerPatient(APIstub, args)
-	}else if function == "queryAllPatient" {
-		return s.queryAllPatient(APIstub)
-	} else if function == "queryPatient" {
+	}else if function == "initLedger" {
+		return s.initLedger(APIstub)
+	}else if function == "queryPatient" {
 		return s.queryPatient(APIstub)
-	} else if function == "registerDoctor" {
-		return s.registerDoctor(APIstub)
 	} 
 
 	return shim.Error("Invalid Smart Contract function name.")
@@ -117,7 +92,7 @@ func (s *SmartContract) queryPatient(APIstub shim.ChaincodeStubInterface, args [
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	patient := []Patient{
 		Patient{FirstName: "Zaheer", SecondName: "wasa", Age: "22", Address: "islamabad"},
-
+		Patient{FirstName: "Khaliq", SecondName: "Ab", Age: "22", Address: "islamabad"},
 		
 	}
 
@@ -145,62 +120,6 @@ func (s *SmartContract) registerPatient(APIstub shim.ChaincodeStubInterface, arg
 	APIstub.PutState(args[0], patientAsBytes)
 
 	return shim.Success(nil)
-}
-func (s *SmartContract) registerDoctor(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 5 {
-		return shim.Error("Incorrect number of arguments. Expecting 5")
-	}
-
-	var doctor = Doctor{FirstName: args[1], SecondName: args[2], Age: args[3], Address: args[4]}
-
-	doctorAsBytes, _ := json.Marshal(doctor)
-	APIstub.PutState(args[0], doctorAsBytes)
-
-	return shim.Success(nil)
-}
-
-func (s *SmartContract) queryAllPatient(APIstub shim.ChaincodeStubInterface) sc.Response {
-
-	startKey := "PATIENT0"
-	endKey := ""
-
-	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-	defer resultsIterator.Close()
-
-	// buffer is a JSON array containing QueryResults
-	var buffer bytes.Buffer
-	buffer.WriteString("[")
-
-	bArrayMemberAlreadyWritten := false
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-		if err != nil {
-			return shim.Error(err.Error())
-		}
-		// Add a comma before array members, suppress it for the first array member
-		if bArrayMemberAlreadyWritten == true {
-			buffer.WriteString(",")
-		}
-		buffer.WriteString("{\"Key\":")
-		buffer.WriteString("\"")
-		buffer.WriteString(queryResponse.Key)
-		buffer.WriteString("\"")
-
-		buffer.WriteString(", \"Record\":")
-		// Record is a JSON object, so we write as-is
-		buffer.WriteString(string(queryResponse.Value))
-		buffer.WriteString("}")
-		bArrayMemberAlreadyWritten = true
-	}
-	buffer.WriteString("]")
-
-	fmt.Printf("- queryAllPatient:\n%s\n", buffer.String())
-
-	return shim.Success(buffer.Bytes())
 }
 
 
