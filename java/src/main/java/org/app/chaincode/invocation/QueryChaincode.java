@@ -67,17 +67,17 @@ public class QueryChaincode {
 			channel.initialize();
 
 			Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, "Querying for all patients ...");
-			Collection<ProposalResponse>  responsesQuery = channelClient.queryByChainCode(Config.CHAINCODE_2_NAME, "queryAllPatient", null);
+			Collection<ProposalResponse>  responsesQuery = channelClient.queryByChainCode(Config.CHAINCODE_1_NAME, "queryAllPatient", null);
 			for (ProposalResponse pres : responsesQuery) {
 				String stringResponse = new String(pres.getChaincodeActionResponsePayload());
 				Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, stringResponse);
 			}
 
-			Thread.sleep(10000);
+			Thread.sleep(1000);
 			String[] args1 = {"Waqas"};
 			Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, "Querying for a Patient - " + args1[0]);
 			
-			Collection<ProposalResponse>  responses1Query = channelClient.queryByChainCode(Config.CHAINCODE_2_NAME, "queryPatient", args1);
+			Collection<ProposalResponse>  responses1Query = channelClient.queryByChainCode(Config.CHAINCODE_1_NAME, "queryPatient", args1);
 			for (ProposalResponse pres : responses1Query) {
 				String stringResponse = new String(pres.getChaincodeActionResponsePayload());
 				Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, stringResponse);

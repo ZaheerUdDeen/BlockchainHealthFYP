@@ -72,10 +72,16 @@ public class RegisterPatient {
 			channel.initialize();
 
 			TransactionProposalRequest request = fabClient.getInstance().newTransactionProposalRequest();
-			ChaincodeID ccid = ChaincodeID.newBuilder().setName(Config.CHAINCODE_2_NAME).build();
+			ChaincodeID ccid = ChaincodeID.newBuilder().setName(Config.CHAINCODE_1_NAME).build();
 			request.setChaincodeID(ccid);
+			//request.setFcn("createCar");
+			//String[] arguments = { "CAR0", "Chevy", "Volt", "Red", "Nick" };
+			
 			request.setFcn("registerPatient");
-			String[] arguments = { "Waqas", "Ahmed", "034397156453", "Normal", "Peshawar" };
+			String[] arguments = { "Zaheer", "Chevy", "Volt", "Red", "Nick" };
+			
+			
+			
 			request.setArgs(arguments);
 			request.setProposalWaitTime(1000);
 
@@ -88,7 +94,7 @@ public class RegisterPatient {
 			Collection<ProposalResponse> responses = channelClient.sendTransactionProposal(request);
 			for (ProposalResponse res: responses) {
 				Status status = res.getStatus();
-				Logger.getLogger(RegisterPatient.class.getName()).log(Level.INFO,"Invoked registerPatient on "+Config.CHAINCODE_2_NAME + ". Status - " + status);
+				Logger.getLogger(RegisterPatient.class.getName()).log(Level.INFO,"Invoked registerPatient on "+Config.CHAINCODE_1_NAME + ". Status - " + status);
 			}
 									
 		} catch (Exception e) {

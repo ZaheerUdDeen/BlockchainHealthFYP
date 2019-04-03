@@ -59,12 +59,13 @@ public class Config {
 	public static final String ORG2_PEER_1_URL = "grpc://localhost:8056";
 	
 	public static final String CHAINCODE_ROOT_DIR = "chaincode";
-	
+
 	public static final String CHAINCODE_1_NAME = "blockchainHealthcare";
-	public static final String CHAINCODE_2_NAME = "emergencyHealthCare";
-	
-	public static final String CHAINCODE_2_PATH = "github.com/emergencyHealthcare";
 	public static final String CHAINCODE_1_PATH = "github.com/blockchainHealthcare";
+
+	
+	public static final String CHAINCODE_2_NAME = "fabcar";
+	public static final String CHAINCODE_2_PATH = "github.com/fabcar";
 	
 	public static final String CHAINCODE_1_VERSION = "1";
 

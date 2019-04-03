@@ -90,8 +90,7 @@ public class DeployInstantiateChaincode {
 //			org2Peers.add(peer1_org2);
 			
 			Collection<ProposalResponse> response = fabClient.deployChainCode(Config.CHAINCODE_1_NAME,
-					Config.CHAINCODE_1_PATH, Config.CHAINCODE_ROOT_DIR, Type.GO_LANG.toString(),
-					Config.CHAINCODE_1_VERSION, org1Peers);
+					Config.CHAINCODE_1_PATH, Config.CHAINCODE_ROOT_DIR, Type.GO_LANG.toString(),Config.CHAINCODE_1_VERSION, org1Peers);
 			
 			
 			for (ProposalResponse res : response) {

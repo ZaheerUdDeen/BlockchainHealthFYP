@@ -55,7 +55,7 @@ public class RegisterDoctor {
 			channel.initialize();
 
 			TransactionProposalRequest request = fabClient.getInstance().newTransactionProposalRequest();
-			ChaincodeID ccid = ChaincodeID.newBuilder().setName(Config.CHAINCODE_2_NAME).build();
+			ChaincodeID ccid = ChaincodeID.newBuilder().setName(Config.CHAINCODE_1_NAME).build();
 			request.setChaincodeID(ccid);
 			request.setFcn("registerDoctor");
 			String[] arguments = { "Dr Waheed", "Ahmed", "034397156453", "Normal", "Peshawar" };
