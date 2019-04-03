@@ -130,7 +130,7 @@ To work with the deployed network using Hyperledger Fabric SDK java 1.0.0, run t
 In this code pattern, we create one channel `mychannel` which is joined by all four peers. The java source code can be seen at  `src/main/java/org/app/network/CreateChannel.java`. To create and initialize the channel, run the following command.
 
    ```
-  java -cp emergency-healthcare.jar main.java.org.app.network.CreateChannel
+  java -cp blockchain-healthcare.jar main.java.org.app.network.CreateChannel
 
    ```
 
@@ -152,7 +152,7 @@ Output:
 This code pattern uses a  chaincode `emergencyHealthCare` to demo the usage of Hyperledger Fabric SDK Java APIs. To deploy and instantiate the chaincode, execute the following command.
 
    ```
-  java -cp emergency-healthcare.jar main.java.org.app.network.DeployInstantiateChaincode
+  java -cp blockchain-healthcare.jar main.java.org.app.network.DeployInstantiateChaincode
    ```
 
    Output:
@@ -186,7 +186,7 @@ INFO: emergencyHealthCare- Chain code instantiation SUCCESS
 A new user can be registered and enrolled to an MSP. Execute the below command to register a new user and enroll to Org1MSP.
 
    ```
-   java -cp blockchain-client.jar org.app.user.RegisterEnrollUser
+   java -cp blockchain-healthcare.jar main.java.org.app.user.RegisterEnrollUser
    ```
 
    Output:
@@ -208,55 +208,139 @@ A new user can be registered and enrolled to an MSP. Execute the below command t
 
 ### 6. Perform Invoke and Query on network
 
-Blockchain network has been setup completely and is ready to use. Now we can test the network by performing invoke and query on the network. The `fabcar` chaincode allows us to create a new asset which is a car. For test purpose, invoke operation is performed to create a new asset in the network and query operation is performed to list the asset of the network. Perform the following steps to check the same.
+Blockchain network has been setup completely and is ready to use. Now we can test the network by performing invoke and query on the network. The `blockchainHealthcare` chaincode allows us to create a new asset which is a car. For test purpose, invoke operation is performed to create a new asset in the network and query operation is performed to list the asset of the network. Perform the following steps to check the same.
 
    ```
-   java -cp emergency-healthcare.jar main.java.org.app.chaincode.invocation.RegisterPatient 
+   java -cp blockchain-healthcare.jar main.java.org.app.chaincode.invocation.RegisterPatient 
    ```
 
    Output:
 
-   ```Apr 20, 2018 5:13:03 PM org.app.client.CAClient enrollAdminUser
-     INFO: CA -http://localhost:7054 Enrolled Admin.
-     Apr 20, 2018 5:13:04 PM org.app.client.ChannelClient sendTransactionProposal
-     INFO: Sending transaction proposal on channel mychannel
-     Apr 20, 2018 5:13:04 PM org.app.client.ChannelClient sendTransactionProposal
-     INFO: Transaction proposal on channel mychannel OK SUCCESS with transaction
-     id:a298b9e27bdb0b6ca18b19f9c78a5371fb4d9b8dd199927baf37379537ca0d0f
-     Apr 20, 2018 5:13:04 PM org.app.client.ChannelClient sendTransactionProposal
-     INFO:
-     Apr 20, 2018 5:13:04 PM org.app.client.ChannelClient sendTransactionProposal
-     INFO: java.util.concurrent.CompletableFuture@22f31dec[Not completed]
-     Apr 20, 2018 5:13:04 PM org.app.chaincode.invocation.InvokeChaincode main
-     INFO: Invoked createCar on fabcar. Status - SUCCESS
+   ```Apr 04, 2019 2:25:15 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - admin.ser
+Apr 04, 2019 2:25:15 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - user1554326606705.ser
+Apr 04, 2019 2:25:15 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - org1
+Apr 04, 2019 2:25:15 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - users
+log4j:WARN No appenders could be found for logger (org.hyperledger.fabric.sdk.helper.Config).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+Apr 04, 2019 2:25:18 AM main.java.org.app.client.CAClient enrollAdminUser
+INFO: CA -http://localhost:7054 Enrolled Admin.
+Apr 04, 2019 2:25:20 AM main.java.org.app.client.ChannelClient sendTransactionProposal
+INFO: Sending transaction proposal on channel mychannel
+Apr 04, 2019 2:25:21 AM main.java.org.app.client.ChannelClient sendTransactionProposal
+INFO: Transaction proposal on channel mychannel OK SUCCESS with transaction id:c6bfdafbe1b61275330d441534bb56e73b99bc71bd5db09133bdc0e43c92f80e
+Apr 04, 2019 2:25:21 AM main.java.org.app.client.ChannelClient sendTransactionProposal
+INFO: 
+Apr 04, 2019 2:25:21 AM main.java.org.app.client.ChannelClient sendTransactionProposal
+INFO: java.util.concurrent.CompletableFuture@68df9280[Not completed]
+Apr 04, 2019 2:25:21 AM main.java.org.app.chaincode.invocation.RegisterPatient main
+INFO: Invoked registerPatient on blockchainHealthcare. Status - SUCCESS
+
   ```
 
    ```
-   java -cp blockchain-client.jar org.app.chaincode.invocation.QueryChaincode
+   java -cp blockchain-healthcare.jar main.java.org.app.chaincode.invocation.RegisterDoctor
    ```
 
    Output:
 
    <pre>
-    Mar 29, 2019 1:38:26 AM main.java.org.app.util.Util deleteDirectory
+    Apr 04, 2019 2:27:23 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - admin.ser
+Apr 04, 2019 2:27:23 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - org1
+Apr 04, 2019 2:27:23 AM main.java.org.app.util.Util deleteDirectory
 INFO: Deleting - users
 log4j:WARN No appenders could be found for logger (org.hyperledger.fabric.sdk.helper.Config).
 log4j:WARN Please initialize the log4j system properly.
 log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
-Mar 29, 2019 1:38:29 AM main.java.org.app.client.CAClient enrollAdminUser
+Apr 04, 2019 2:27:26 AM main.java.org.app.client.CAClient enrollAdminUser
 INFO: CA -http://localhost:7054 Enrolled Admin.
-Mar 29, 2019 1:38:31 AM main.java.org.app.client.ChannelClient sendTransactionProposal
+Apr 04, 2019 2:27:28 AM main.java.org.app.client.ChannelClient sendTransactionProposal
 INFO: Sending transaction proposal on channel mychannel
-Mar 29, 2019 1:38:32 AM main.java.org.app.client.ChannelClient sendTransactionProposal
-INFO: Transaction proposal on channel mychannel OK SUCCESS with transaction id:bcc8190cc775459aa1fb1ef7a72fa523b6236bd67dc638db86df2bc66792166d
-Mar 29, 2019 1:38:32 AM main.java.org.app.client.ChannelClient sendTransactionProposal
+Apr 04, 2019 2:27:28 AM main.java.org.app.client.ChannelClient sendTransactionProposal
+INFO: Transaction proposal on channel mychannel OK SUCCESS with transaction id:1b595a985f60aca197b2761ee233d62ef09d8b145db4d37a9ee65eb17df214ec
+Apr 04, 2019 2:27:28 AM main.java.org.app.client.ChannelClient sendTransactionProposal
 INFO: 
-Mar 29, 2019 1:38:32 AM main.java.org.app.client.ChannelClient sendTransactionProposal
+Apr 04, 2019 2:27:28 AM main.java.org.app.client.ChannelClient sendTransactionProposal
 INFO: java.util.concurrent.CompletableFuture@479460a6[Not completed]
-Mar 29, 2019 1:38:32 AM main.java.org.app.chaincode.invocation.RegisterPatient main
-INFO: Invoked registerPatient on fabcar. Status - SUCCESS
+Apr 04, 2019 2:27:28 AM main.java.org.app.chaincode.invocation.RegisterDoctor main
+INFO: Invoked registerDoctor on blockchainHealthcare. Status - SUCCESS
 
    </pre>
 
+
+
+
+ ```
+   java -cp blockchain-healthcare.jar main.java.org.app.chaincode.invocation.QueryPatient
+   ```
+
+   Output:
+
+   <pre>
+    Apr 04, 2019 2:27:40 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - admin.ser
+Apr 04, 2019 2:27:40 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - org1
+Apr 04, 2019 2:27:40 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - users
+log4j:WARN No appenders could be found for logger (org.hyperledger.fabric.sdk.helper.Config).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+Apr 04, 2019 2:27:43 AM main.java.org.app.client.CAClient enrollAdminUser
+INFO: CA -http://localhost:7054 Enrolled Admin.
+Apr 04, 2019 2:27:45 AM main.java.org.app.chaincode.invocation.QueryChaincode main
+INFO: Querying for all patients ...
+Apr 04, 2019 2:27:45 AM main.java.org.app.client.ChannelClient queryByChainCode
+INFO: Querying queryAllPatient on channel mychannel
+Apr 04, 2019 2:27:45 AM main.java.org.app.chaincode.invocation.QueryChaincode main
+INFO: [{"Key":"Zaheer", "Record":{"firstName":"Chevy","secondName":"Volt","age":"Red","address":"Nick"}}]
+Apr 04, 2019 2:27:46 AM main.java.org.app.chaincode.invocation.QueryChaincode main
+INFO: Querying for a Patient - Waqas
+Apr 04, 2019 2:27:46 AM main.java.org.app.client.ChannelClient queryByChainCode
+INFO: Querying queryPatient on channel mychannel
+Apr 04, 2019 2:27:46 AM main.java.org.app.chaincode.invocation.QueryChaincode main
+INFO: 
+
+   </pre>
+
+
+
+   ```
+	java -cp blockchain-healthcare.jar main.java.org.app.chaincode.invocation.QueryDoctors
+   ```
+
+   Output:
+
+   <pre>Apr 04, 2019 2:27:53 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - admin.ser
+Apr 04, 2019 2:27:53 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - org1
+Apr 04, 2019 2:27:53 AM main.java.org.app.util.Util deleteDirectory
+INFO: Deleting - users
+log4j:WARN No appenders could be found for logger (org.hyperledger.fabric.sdk.helper.Config).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+Apr 04, 2019 2:27:56 AM main.java.org.app.client.CAClient enrollAdminUser
+INFO: CA -http://localhost:7054 Enrolled Admin.
+Apr 04, 2019 2:27:58 AM main.java.org.app.chaincode.invocation.QueryDoctors main
+INFO: Querying for all Doctors ...
+Apr 04, 2019 2:27:58 AM main.java.org.app.client.ChannelClient queryByChainCode
+INFO: Querying queryAllDoctors on channel mychannel
+Apr 04, 2019 2:27:58 AM main.java.org.app.chaincode.invocation.QueryDoctors main
+INFO: [{"Key":"Dr Waheed", "Record":{"firstName":"Ahmed","secondName":"034397156453","age":"Normal","address":"Peshawar"}},{"Key":"Zaheer", "Record":{"firstName":"Chevy","secondName":"Volt","age":"Red","address":"Nick"}}]
+Apr 04, 2019 2:27:59 AM main.java.org.app.chaincode.invocation.QueryDoctors main
+INFO: Querying for a Doctor - Waqas
+Apr 04, 2019 2:27:59 AM main.java.org.app.client.ChannelClient queryByChainCode
+INFO: Querying queryDoctor on channel mychannel
+Apr 04, 2019 2:27:59 AM main.java.org.app.chaincode.invocation.QueryDoctors main
+INFO:
+
+   </pre>
 [Apache Software License (ASL) FAQ](https://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
 
