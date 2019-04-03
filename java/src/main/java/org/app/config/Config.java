@@ -64,9 +64,6 @@ public class Config {
 	public static final String CHAINCODE_1_PATH = "github.com/blockchainHealthcare";
 
 	
-	public static final String CHAINCODE_2_NAME = "fabcar";
-	public static final String CHAINCODE_2_PATH = "github.com/fabcar";
-	
 	public static final String CHAINCODE_1_VERSION = "1";
 
 

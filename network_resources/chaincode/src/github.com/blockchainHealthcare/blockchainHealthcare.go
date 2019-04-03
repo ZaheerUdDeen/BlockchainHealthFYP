@@ -43,11 +43,12 @@ type SmartContract struct {
 }
 
 // Define the car structure, with 4 properties.  Structure tags are used by encoding/json library
-type Car struct {
-	Make   string `json:"make"`
-	Model  string `json:"model"`
-	Colour string `json:"colour"`
-	Owner  string `json:"owner"`
+type Doctor struct {
+	FirstName   string `json:"firstName"`
+	SecondName  string `json:"secondName"`
+	Age 	    string `json:"age"`
+	Address     string `json:"address"`
+	
 }
 type Patient struct {
 	FirstName   string `json:"firstName"`
@@ -76,15 +77,17 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.queryPatient(APIstub, args)
 	} else if function == "initLedger" {
 		return s.initLedger(APIstub)
-	} else if function == "createCar" {
-		return s.createCar(APIstub, args)
 	} else if function == "queryAllPatient" {
 		return s.queryAllPatient(APIstub)
-	} else if function == "changeCarOwner" {
-		return s.changeCarOwner(APIstub, args)
-	}else if function == "registerPatient" {
+	} else if function == "registerPatient" {
 		return s.registerPatient(APIstub, args)
-	}
+	}else if function == "registerDoctor" {
+		return s.registerDoctor(APIstub, args)
+	}else if function == "queryDoctor" {
+		return s.queryDoctor(APIstub,args)
+	}else if function == "queryAllDoctors" {
+		return s.queryAllDoctors(APIstub)
+	} 
 
 	return shim.Error("Invalid Smart Contract function name.")
 }
@@ -97,55 +100,37 @@ func (s *SmartContract) queryPatient(APIstub shim.ChaincodeStubInterface, args [
 	patientAsBytes, _ := APIstub.GetState(args[0])
 	return shim.Success(patientAsBytes)
 }
-func (s *SmartContract) queryCar(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) queryDoctor(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	carAsBytes, _ := APIstub.GetState(args[0])
-	return shim.Success(carAsBytes)
+	doctorAsBytes, _ := APIstub.GetState(args[0])
+	return shim.Success(doctorAsBytes)
 }
 
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
-	cars := []Car{
-		Car{Make: "Toyota", Model: "Prius", Colour: "blue", Owner: "Tomoko"},
-		Car{Make: "Ford", Model: "Mustang", Colour: "red", Owner: "Brad"},
-		Car{Make: "Hyundai", Model: "Tucson", Colour: "green", Owner: "Jin Soo"},
-		Car{Make: "Volkswagen", Model: "Passat", Colour: "yellow", Owner: "Max"},
-		Car{Make: "Tesla", Model: "S", Colour: "black", Owner: "Adriana"},
-		Car{Make: "Peugeot", Model: "205", Colour: "purple", Owner: "Michel"},
-		Car{Make: "Chery", Model: "S22L", Colour: "white", Owner: "Aarav"},
-		Car{Make: "Fiat", Model: "Punto", Colour: "violet", Owner: "Pari"},
-		Car{Make: "Tata", Model: "Nano", Colour: "indigo", Owner: "Valeria"},
-		Car{Make: "Holden", Model: "Barina", Colour: "brown", Owner: "Shotaro"},
+	patient := []Patient{
+		Patient{FirstName: "Zaheer", SecondName: "wasa", Age: "22", Address: "islamabad"},
+		Patient{FirstName: "waqas", SecondName: "wasa", Age: "22", Address: "islamabad"},
+
+		
 	}
 
 	i := 0
-	for i < len(cars) {
+	for i < len(patient) {
 		fmt.Println("i is ", i)
-		carAsBytes, _ := json.Marshal(cars[i])
-		APIstub.PutState("CAR"+strconv.Itoa(i), carAsBytes)
-		fmt.Println("Added", cars[i])
+		patientAsBytes, _ := json.Marshal(patient[i])
+		APIstub.PutState("patient"+strconv.Itoa(i), patientAsBytes)
+		fmt.Println("Added", patient[i])
 		i = i + 1
 	}
 
 	return shim.Success(nil)
 }
 
-func (s *SmartContract) createCar(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 5 {
-		return shim.Error("Incorrect number of arguments. Expecting 5")
-	}
-
-	var car = Car{Make: args[1], Model: args[2], Colour: args[3], Owner: args[4]}
-
-	carAsBytes, _ := json.Marshal(car)
-	APIstub.PutState(args[0], carAsBytes)
-
-	return shim.Success(nil)
-}
 func (s *SmartContract) registerPatient(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 5 {
@@ -201,11 +186,23 @@ func (s *SmartContract) queryAllPatient(APIstub shim.ChaincodeStubInterface) sc.
 
 	return shim.Success(buffer.Bytes())
 }
+func (s *SmartContract) registerDoctor(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-func (s *SmartContract) queryAllCars(APIstub shim.ChaincodeStubInterface) sc.Response {
+	if len(args) != 5 {
+		return shim.Error("Incorrect number of arguments. Expecting 5")
+	}
 
-	startKey := "CAR0"
-	endKey := "CAR999"
+	var doctor = Doctor{FirstName: args[1], SecondName: args[2], Age: args[3], Address: args[4]}
+
+	doctorAsBytes, _ := json.Marshal(doctor)
+	APIstub.PutState(args[0], doctorAsBytes)
+
+	return shim.Success(nil)
+}
+func (s *SmartContract) queryAllDoctors(APIstub shim.ChaincodeStubInterface) sc.Response {
+
+	startKey := "DOCTOR0"
+	endKey := ""
 
 	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
 	if err != nil {
@@ -240,27 +237,9 @@ func (s *SmartContract) queryAllCars(APIstub shim.ChaincodeStubInterface) sc.Res
 	}
 	buffer.WriteString("]")
 
-	fmt.Printf("- queryAllCars:\n%s\n", buffer.String())
+	fmt.Printf("- queryAllDoctor:\n%s\n", buffer.String())
 
 	return shim.Success(buffer.Bytes())
-}
-
-func (s *SmartContract) changeCarOwner(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 2 {
-		return shim.Error("Incorrect number of arguments. Expecting 2")
-	}
-
-	carAsBytes, _ := APIstub.GetState(args[0])
-	car := Car{}
-
-	json.Unmarshal(carAsBytes, &car)
-	car.Owner = args[1]
-
-	carAsBytes, _ = json.Marshal(car)
-	APIstub.PutState(args[0], carAsBytes)
-
-	return shim.Success(nil)
 }
 
 // The main function is only relevant in unit test mode. Only included here for completeness.

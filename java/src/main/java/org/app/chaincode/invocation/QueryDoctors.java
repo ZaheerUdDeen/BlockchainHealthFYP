@@ -1,15 +1,3 @@
-/****************************************************** 
- *  Copyright 2018 IBM Corporation 
- *  Licensed under the Apache License, Version 2.0 (the "License"); 
- *  you may not use this file except in compliance with the License. 
- *  You may obtain a copy of the License at 
- *  http://www.apache.org/licenses/LICENSE-2.0 
- *  Unless required by applicable law or agreed to in writing, software 
- *  distributed under the License is distributed on an "AS IS" BASIS, 
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- *  See the License for the specific language governing permissions and 
- *  limitations under the License.
- */ 
 package main.java.org.app.chaincode.invocation;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -18,26 +6,20 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import main.java.org.app.client.CAClient;
-import main.java.org.app.client.ChannelClient;
-import main.java.org.app.client.FabricClient;
-import main.java.org.app.config.Config;
-import main.java.org.app.user.UserContext;
-import main.java.org.app.util.Util;
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.EventHub;
 import org.hyperledger.fabric.sdk.Orderer;
 import org.hyperledger.fabric.sdk.Peer;
 import org.hyperledger.fabric.sdk.ProposalResponse;
 
-/**
- * 
- * @author Zaheer Ud Din
- *
- */
+import main.java.org.app.client.CAClient;
+import main.java.org.app.client.ChannelClient;
+import main.java.org.app.client.FabricClient;
+import main.java.org.app.config.Config;
+import main.java.org.app.user.UserContext;
+import main.java.org.app.util.Util;
 
-public class QueryChaincode {
-
+public class QueryDoctors {
 	private static final byte[] EXPECTED_EVENT_DATA = "!".getBytes(UTF_8);
 	private static final String EXPECTED_EVENT_NAME = "event";
 
@@ -66,26 +48,25 @@ public class QueryChaincode {
 			channel.addOrderer(orderer);
 			channel.initialize();
 
-			Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, "Querying for all patients ...");
-			Collection<ProposalResponse>  responsesQuery = channelClient.queryByChainCode(Config.CHAINCODE_1_NAME, "queryAllPatient", null);
+			Logger.getLogger(QueryPatient.class.getName()).log(Level.INFO, "Querying for all Doctors ...");
+			Collection<ProposalResponse>  responsesQuery = channelClient.queryByChainCode(Config.CHAINCODE_1_NAME, "queryAllDoctors", null);
 			for (ProposalResponse pres : responsesQuery) {
 				String stringResponse = new String(pres.getChaincodeActionResponsePayload());
-				Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, stringResponse);
+				Logger.getLogger(QueryPatient.class.getName()).log(Level.INFO, stringResponse);
 			}
 
 			Thread.sleep(1000);
 			String[] args1 = {"Waqas"};
-			Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, "Querying for a Patient - " + args1[0]);
+			Logger.getLogger(QueryPatient.class.getName()).log(Level.INFO, "Querying for a Doctor - " + args1[0]);
 			
-			Collection<ProposalResponse>  responses1Query = channelClient.queryByChainCode(Config.CHAINCODE_1_NAME, "queryPatient", args1);
+			Collection<ProposalResponse>  responses1Query = channelClient.queryByChainCode(Config.CHAINCODE_1_NAME, "queryDoctor", args1);
 			for (ProposalResponse pres : responses1Query) {
 				String stringResponse = new String(pres.getChaincodeActionResponsePayload());
-				Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, stringResponse);
+				Logger.getLogger(QueryPatient.class.getName()).log(Level.INFO, stringResponse);
 			}		
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }
